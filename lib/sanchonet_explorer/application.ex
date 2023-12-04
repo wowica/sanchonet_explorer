@@ -10,13 +10,11 @@ defmodule SanchonetExplorer.Application do
     children = [
       SanchonetExplorerWeb.Telemetry,
       SanchonetExplorer.Repo,
-      {DNSCluster, query: Application.get_env(:sanchonet_explorer, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:sanchonet_explorer, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: SanchonetExplorer.PubSub},
-      # Start the Finch HTTP client for sending emails
       {Finch, name: SanchonetExplorer.Finch},
-      # Start a worker by calling: SanchonetExplorer.Worker.start_link(arg)
-      # {SanchonetExplorer.Worker, arg},
-      # Start to serve requests, typically the last entry
+      {SanchonetExplorer.PoolInfo, pool_info_opts()},
       SanchonetExplorerWeb.Endpoint
     ]
 
@@ -24,6 +22,11 @@ defmodule SanchonetExplorer.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: SanchonetExplorer.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp pool_info_opts do
+    :sanchonet_explorer
+    |> Application.get_env(SanchonetExplorer.PoolInfo)
   end
 
   # Tell Phoenix to update the endpoint configuration

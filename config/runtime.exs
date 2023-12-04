@@ -115,3 +115,17 @@ if config_env() == :prod do
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
 end
+
+if config_env() != :test do
+  db_sync_url =
+    System.get_env("DBSYNC_URL") ||
+      raise """
+      environment variable DBSYNC_URL is missing.
+      """
+
+  config :sanchonet_explorer, SanchonetExplorer.Repo,
+    url: db_sync_url,
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5"),
+    timeout: 5_000,
+    socket_options: []
+end
