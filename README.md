@@ -1,5 +1,9 @@
 # SanchonetExplorer
 
+A simple block explorer for the Cardano SanchoNet Testnet.
+
+![](docs/screenshot.png)
+
 To start your Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
