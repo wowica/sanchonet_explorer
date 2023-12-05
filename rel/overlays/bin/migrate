@@ -1,3 +1,4 @@
 #!/bin/sh
-cd -P -- "$(dirname -- "$0")"
-exec ./sanchonet_explorer eval SanchonetExplorer.Release.migrate
+#cd -P -- "$(dirname -- "$0")"
+#exec ./sanchonet_explorer eval SanchonetExplorer.Release.migrate
+echo "No migrations to run. Ever."
