@@ -109,11 +109,9 @@ if config_env() != :test do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
-  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
-
   config :sanchonet_explorer, SanchonetExplorer.Repo,
-    # ssl: true,
+    ssl: false,
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: maybe_ipv6
+    socket_options: []
 end
